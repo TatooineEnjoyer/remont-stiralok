@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ремонт стиральных машин — мастер рядом с вами</title>
+    <!-- Яндекс.Карты API (версия 2.1) -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_api_ключ&lang=ru_RU" type="text/javascript"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f4f8;
+            padding: 16px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        .badge {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        #map {
+            width: 100%;
+            height: 320px;
+            border-radius: 24px;
+            margin: 16px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .status {
+            background: #eef2ff;
+            padding: 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.8);}
+            100% { opacity: 1; transform: scale(1.2);}
+        }
+        .price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 12px 0;
+        }
+        .price small {
+            font-size: 14px;
+            font-weight: normal;
+            color: #475569;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            margin-top: 12px;
+            font-size: 16px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 20px;
+        }
+        .tel {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 60px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <span class="badge">⚡ Мастер в Московской области</span>
+        <h1>Ремонт стиральных и посудомоечных машин</h1>
+        <p>Выезжаю в течение 1–2 часов. Диагностика <strong>бесплатно</strong> при ремонте.</p>
+
+        <!-- Карта -->
+        <div id="map"></div>
+
+        <!-- Статус местоположения -->
+        <div class="status" id="locationStatus">
+            <span class="dot"></span> Определяю ваше местоположение...
+        </div>
+
+        <div class="price">
+            Выезд мастера: 0 ₽ <small>(в пределах МО)</small>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📞 Оставить заявку</h3>
+        <form id="orderForm">
+            <input type="text" id="name" placeholder="Ваше имя" required>
+            <input type="tel" id="phone" placeholder="Телефон (для связи)" required>
+            <select id="device">
+                <option value="Стиральная машина">Стиральная машина</option>
+                <option value="Посудомоечная машина">Посудомоечная машина</option>
+            </select>
+            <input type="text" id="brand" placeholder="Бренд (LG, Samsung, Bosch...)">
+            <button type="submit">🚀 Вызвать мастера сейчас</button>
+        </form>
+        <div class="tel" style="margin-top: 16px;">
+            <a href="tel:+79001234567" style="text-decoration: none; color: #2563eb;">📞 +7 (900) 123-45-67</a>
+        </div>
+    </div>
+    <div class="footer">
+        Работаю в Москве и Московской области • Гарантия 1 год
+    </div>
+</div>
+
+<script>
+    // ---------- НАСТРОЙКИ (поменяйте под себя) ----------
+    const YOUR_TELEGRAM_BOT_TOKEN = "7123456789:AAExampleToken12345";  // Токен от @BotFather
+    const YOUR_CHAT_ID = "123456789";   // Ваш Telegram ID (можно узнать у @userinfobot)
+    // ----------------------------------------------------
+
+    let userMap = null;
+    let userPlacemark = null;
+    let masterPlacemark = null;
+
+    // Функция инициализации карты (ждём загрузки API)
+    function initMap(latitude, longitude) {
+        if (userMap) return;
+
+        userMap = new ymaps.Map("map", {
+            center: [latitude, longitude],
+            zoom: 13,
+            controls: ["zoomControl", "geolocationControl"]
+        });
+
+        // Метка мастера (вы) — зелёный дом/ключ
+        masterPlacemark = new ymaps.Placemark([latitude, longitude], {
+            balloonContent: "📍 Я здесь (мастер) — готов выехать к вам"
+        }, {
+            preset: "islands#greenHomeIcon",
+            iconColor: "#16a34a"
+        });
+        userMap.geoObjects.add(masterPlacemark);
+
+        // Метка клиента (пока скрыта, появится после геолокации)
+        userPlacemark = new ymaps.Placemark([latitude, longitude], {
+            balloonContent: "Вы здесь"
+        }, {
+            preset: "islands#blueCircleDotIcon",
+            iconColor: "#3b82f6"
+        });
+    }
+
+    // Получаем реальное положение клиента (через браузер)
+    function getClientLocation() {
+        const statusDiv = document.getElementById("locationStatus");
+        if (!navigator.geolocation) {
+            statusDiv.innerHTML = "⚠️ Ваш браузер не поддерживает геолокацию. Напишите мне в WhatsApp.";
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                statusDiv.innerHTML = `<span class="dot"></span> ✅ Я вижу вас! Мастер рядом. Жмите "Вызвать мастера".`;
+                
+                if (!userMap) {
+                    // Первый запуск — создаём карту с центром на клиенте
+                    ymaps.ready(() => initMap(lat, lng));
+                    setTimeout(() => {
+                        if (userMap && userPlacemark) {
+                            userPlacemark.geometry.setCoordinates([lat, lng]);
+                            userMap.geoObjects.add(userPlacemark);
+                            userMap.setCenter([lat, lng], 13);
+                        }
+                    }, 500);
+                } else {
+                    // Если карта уже есть — просто перемещаем метку клиента
+                    if (userPlacemark) {
+                        userPlacemark.geometry.setCoordinates([lat, lng]);
+                        if (!userMap.geoObjects.getIndexOf(userPlacemark) !== -1) {
+                            userMap.geoObjects.add(userPlacemark);
+                        }
+                        userMap.setCenter([lat, lng], 13);
+                    }
+                }
+            },
+            (error) => {
+                console.error("Ошибка геолокации", error);
+                statusDiv.innerHTML = "📍 Не удалось определить. Нажмите на кнопку телефона — я отвечу!";
+                // Фолбэк — показать карту с центром Москвы
+                ymaps.ready(() => initMap(55.751244, 37.618423));
+            }
+        );
+    }
+
+    // Запускаем получение геопозиции при загрузке
+    window.onload = () => {
+        getClientLocation();
+    };
+
+    // Отправка формы в Telegram (бесплатный бот)
+    document.getElementById("orderForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const device = document.getElementById("device").value;
+        const brand = document.getElementById("brand").value.trim();
+
+        if (!name || !phone) {
+            alert("Заполните имя и телефон");
+            return;
+        }
+
+        const button = e.target.querySelector("button");
+        button.textContent = "Отправляю...";
+        button.disabled = true;
+
+        const message = `🔧 НОВАЯ ЗАЯВКА НА РЕМОНТ\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🛠 Устройство: ${device}\n🏷 Бренд: ${brand || "не указан"}\n📍 Время: ${new Date().toLocaleString()}`;
+
+        try {
+            const url = `https://api.telegram.org/bot${YOUR_TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: YOUR_CHAT_ID,
+                    text: message,
+                    parse_mode: "HTML"
+                })
+            });
+            const data = await response.json();
+            if (data.ok) {
+                alert("✅ Заявка отправлена! Я перезвоню через 5 минут.");
+                document.getElementById("orderForm").reset();
+            } else {
+                alert("❌ Ошибка. Позвоните по телефону: +79001234567");
+            }
+        } catch (err) {
+            alert("Не отправилось. Позвоните мне: +79001234567");
+        } finally {
+            button.textContent = "🚀 Вызвать мастера сейчас";
+            button.disabled = false;
+        }
+    });
+</script>
+</body>
+</html>

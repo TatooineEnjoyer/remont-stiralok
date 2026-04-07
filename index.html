@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Ремонт стиральных машин — мастер рядом с вами</title>
-    <!-- Яндекс.Карты API (версия 2.1) -->
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_api_ключ&lang=ru_RU" type="text/javascript"></script>
+    <title>Ремонт стиральных и посудомоечных машин | Мастер в Московской области</title>
+    <meta name="description" content="Ремонт стиральных и посудомоечных машин в МО. Самозанятый мастер. Выезд за 1 час. Гарантия + чек. Бесплатная диагностика.">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>
     <style>
         * {
             margin: 0;
@@ -13,9 +13,10 @@
             box-sizing: border-box;
         }
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: #f0f4f8;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
             padding: 16px;
+            color: #0f172a;
         }
         .container {
             max-width: 600px;
@@ -25,40 +26,69 @@
             background: white;
             border-radius: 28px;
             padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #1e293b;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .badge {
             background: #dcfce7;
             color: #15803d;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 40px;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             display: inline-block;
             margin-bottom: 16px;
         }
-        #map {
-            width: 100%;
-            height: 320px;
-            border-radius: 24px;
-            margin: 16px 0;
-            border: 1px solid #e2e8f0;
+        h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .master-card {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 20px;
+        }
+        .master-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2563eb;
+        }
+        .master-info {
+            flex: 1;
+        }
+        .master-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .master-exp {
+            font-size: 14px;
+            color: #475569;
+            margin-top: 4px;
         }
         .status {
             background: #eef2ff;
             padding: 12px;
             border-radius: 20px;
             font-size: 14px;
-            margin-top: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            margin: 16px 0;
         }
         .dot {
             width: 10px;
@@ -71,24 +101,80 @@
             0% { opacity: 0.4; transform: scale(0.8);}
             100% { opacity: 1; transform: scale(1.2);}
         }
+        #map {
+            width: 100%;
+            height: 280px;
+            border-radius: 20px;
+            margin: 16px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .features {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .feature {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 16px;
+        }
+        .feature img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+        }
+        .feature p {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .price-block {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
         .price {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
-            color: #0f172a;
-            margin: 12px 0;
         }
         .price small {
             font-size: 14px;
-            font-weight: normal;
-            color: #475569;
+        }
+        .review {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 16px;
+        }
+        .review-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        .review-text {
+            font-size: 14px;
+            flex: 1;
+        }
+        .review-name {
+            font-weight: bold;
+            margin-bottom: 4px;
         }
         input, select, button {
             width: 100%;
-            padding: 14px;
+            padding: 14px 16px;
             border-radius: 60px;
             border: 1px solid #cbd5e1;
             margin-top: 12px;
             font-size: 16px;
+            font-family: inherit;
         }
         button {
             background: #2563eb;
@@ -101,151 +187,200 @@
         button:hover {
             background: #1d4ed8;
         }
+        .tel-block {
+            text-align: center;
+            margin-top: 16px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 60px;
+        }
+        .tel-block a {
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #2563eb;
+        }
         .footer {
             text-align: center;
             font-size: 12px;
             color: #64748b;
-            margin-top: 20px;
+            margin-top: 16px;
+            padding: 16px;
         }
-        .tel {
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 60px;
+        hr {
+            margin: 16px 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- Карточка мастера -->
     <div class="card">
-        <span class="badge">⚡ Мастер в Московской области</span>
-        <h1>Ремонт стиральных и посудомоечных машин</h1>
-        <p>Выезжаю в течение 1–2 часов. Диагностика <strong>бесплатно</strong> при ремонте.</p>
+        <span class="badge">🔧 Самозанятый мастер • Работаю официально</span>
+        <h1>Ремонт стиральных и посудомоечных машин в Московской области</h1>
+        
+        <div class="master-card">
+            <img src="images/master.jpg" alt="Мастер" class="master-photo" onerror="this.src='https://placehold.co/70x70?text=Фото'">
+            <div class="master-info">
+                <div class="master-name">Алексей (или ваше имя)</div>
+                <div class="master-exp">✅ 7 лет опыта • 500+ отремонтированных машин</div>
+            </div>
+        </div>
 
-        <!-- Карта -->
+        <!-- Карта с геолокацией -->
         <div id="map"></div>
-
-        <!-- Статус местоположения -->
         <div class="status" id="locationStatus">
             <span class="dot"></span> Определяю ваше местоположение...
         </div>
 
-        <div class="price">
-            Выезд мастера: 0 ₽ <small>(в пределах МО)</small>
+        <!-- Преимущества (чеки, гарантия) -->
+        <div class="features">
+            <div class="feature">
+                <img src="images/garanty.jpg" alt="Гарантия" onerror="this.src='https://placehold.co/48x48?text=🔧'">
+                <p>Гарантия 1 год</p>
+            </div>
+            <div class="feature">
+                <img src="images/receipt.jpg" alt="Чек" onerror="this.src='https://placehold.co/48x48?text=🧾'">
+                <p>Официальный чек</p>
+            </div>
+            <div class="feature">
+                <img src="https://placehold.co/48x48?text=⚡" alt="Скорость">
+                <p>Выезд за 1 час</p>
+            </div>
         </div>
     </div>
 
+    <!-- Блок с ценой -->
+    <div class="price-block">
+        <div class="price">Диагностика 0 ₽ <small>при ремонте</small></div>
+        <div style="font-size: 14px; margin-top: 8px;">Выезд по МО — бесплатно</div>
+    </div>
+
+    <!-- Форма заявки -->
     <div class="card">
-        <h3>📞 Оставить заявку</h3>
+        <h2>📞 Оставить заявку</h2>
+        <p style="font-size: 14px; margin-bottom: 8px;">Отвечаю за 5 минут в рабочее время</p>
         <form id="orderForm">
             <input type="text" id="name" placeholder="Ваше имя" required>
-            <input type="tel" id="phone" placeholder="Телефон (для связи)" required>
+            <input type="tel" id="phone" placeholder="Телефон" required>
             <select id="device">
                 <option value="Стиральная машина">Стиральная машина</option>
                 <option value="Посудомоечная машина">Посудомоечная машина</option>
             </select>
-            <input type="text" id="brand" placeholder="Бренд (LG, Samsung, Bosch...)">
+            <input type="text" id="brand" placeholder="Бренд (LG, Samsung, Bosch, Indesit...)">
             <button type="submit">🚀 Вызвать мастера сейчас</button>
         </form>
-        <div class="tel" style="margin-top: 16px;">
-            <a href="tel:+79001234567" style="text-decoration: none; color: #2563eb;">📞 +7 (901) 772-19-14</a>
+        <div class="tel-block">
+            <a href="tel:+79001234567">📞 +7 (900) 123-45-67</a>
+            <p style="font-size: 12px; margin-top: 6px;">Звоните с 9:00 до 21:00</p>
         </div>
     </div>
+
+    <!-- Отзывы -->
+    <div class="card">
+        <h3>⭐ Отзывы клиентов</h3>
+        <div class="review">
+            <img src="images/review1.jpg" class="review-img" alt="Отзыв" onerror="this.src='https://placehold.co/50x50?text=📱'">
+            <div class="review-text">
+                <div class="review-name">Ольга, Химки</div>
+                <div>«Приехал через час, быстро починил, дал чек. Рекомендую!»</div>
+            </div>
+        </div>
+        <div class="review">
+            <img src="images/review2.jpg" class="review-img" alt="Отзыв" onerror="this.src='https://placehold.co/50x50?text=📱'">
+            <div class="review-text">
+                <div class="review-name">Дмитрий, Мытищи</div>
+                <div>«Профессионал. Всё объяснил, гарантию оформил. Спасибо!»</div>
+            </div>
+        </div>
+        <div class="review">
+            <img src="images/review3.jpg" class="review-img" alt="Отзыв" onerror="this.src='https://placehold.co/50x50?text=📱'">
+            <div class="review-text">
+                <div class="review-name">Екатерина, Балашиха</div>
+                <div>«Мастер приятный, чек дал электронный. Ремонт на совесть.»</div>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
-        Работаю в Москве и Московской области • Гарантия 2 года
+        <p>Работаю официально как самозанятый • Предоставляю чек и гарантийный талон</p>
+        <p>© 2025 Мастер по ремонту | Московская область</p>
     </div>
 </div>
 
 <script>
-    // ---------- НАСТРОЙКИ (поменяйте под себя) ----------
-    const YOUR_TELEGRAM_BOT_TOKEN = "8640771565:AAHwGCldMq_AgE9mCc-2nqJoBCPUmCd8p1k";  // Токен от @BotFather
-    const YOUR_CHAT_ID = "@Tatooineman";   // Ваш Telegram ID (можно узнать у @userinfobot)
-    // ----------------------------------------------------
+    // ========== НАСТРОЙКИ (ЗАМЕНИТЕ НА СВОИ) ==========
+    const YOUR_TELEGRAM_BOT_TOKEN = "7123456789:AAExampleToken12345";  // Токен от @BotFather
+    const YOUR_CHAT_ID = "123456789";   // Ваш Telegram ID
+    // =================================================
 
     let userMap = null;
     let userPlacemark = null;
     let masterPlacemark = null;
 
-    // Функция инициализации карты (ждём загрузки API)
     function initMap(latitude, longitude) {
         if (userMap) return;
-
         userMap = new ymaps.Map("map", {
             center: [latitude, longitude],
-            zoom: 13,
+            zoom: 12,
             controls: ["zoomControl", "geolocationControl"]
         });
-
-        // Метка мастера (вы) — зелёный дом/ключ
         masterPlacemark = new ymaps.Placemark([latitude, longitude], {
-            balloonContent: "📍 Я здесь (мастер) — готов выехать к вам"
+            balloonContent: "📍 Я здесь (мастер) — готов выехать"
         }, {
             preset: "islands#greenHomeIcon",
             iconColor: "#16a34a"
         });
         userMap.geoObjects.add(masterPlacemark);
-
-        // Метка клиента (пока скрыта, появится после геолокации)
-        userPlacemark = new ymaps.Placemark([latitude, longitude], {
-            balloonContent: "Вы здесь"
-        }, {
+        userPlacemark = new ymaps.Placemark([latitude, longitude], {}, {
             preset: "islands#blueCircleDotIcon",
             iconColor: "#3b82f6"
         });
     }
 
-    // Получаем реальное положение клиента (через браузер)
     function getClientLocation() {
         const statusDiv = document.getElementById("locationStatus");
         if (!navigator.geolocation) {
-            statusDiv.innerHTML = "⚠️ Ваш браузер не поддерживает геолокацию. Напишите мне в WhatsApp.";
+            statusDiv.innerHTML = "⚠️ Включите геолокацию или напишите мне в WhatsApp";
             return;
         }
-
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
-                statusDiv.innerHTML = `<span class="dot"></span> ✅ Я вижу вас! Мастер рядом. Жмите "Вызвать мастера".`;
-                
+                statusDiv.innerHTML = `<span class="dot"></span> ✅ Я вижу вас! Мастер рядом. Оставляйте заявку.`;
                 if (!userMap) {
-                    // Первый запуск — создаём карту с центром на клиенте
                     ymaps.ready(() => initMap(lat, lng));
                     setTimeout(() => {
                         if (userMap && userPlacemark) {
                             userPlacemark.geometry.setCoordinates([lat, lng]);
                             userMap.geoObjects.add(userPlacemark);
-                            userMap.setCenter([lat, lng], 13);
+                            userMap.setCenter([lat, lng], 12);
                         }
                     }, 500);
                 } else {
-                    // Если карта уже есть — просто перемещаем метку клиента
                     if (userPlacemark) {
                         userPlacemark.geometry.setCoordinates([lat, lng]);
-                        if (!userMap.geoObjects.getIndexOf(userPlacemark) !== -1) {
+                        if (userMap.geoObjects.getIndexOf(userPlacemark) === -1) {
                             userMap.geoObjects.add(userPlacemark);
                         }
-                        userMap.setCenter([lat, lng], 13);
+                        userMap.setCenter([lat, lng], 12);
                     }
                 }
             },
-            (error) => {
-                console.error("Ошибка геолокации", error);
-                statusDiv.innerHTML = "📍 Не удалось определить. Нажмите на кнопку телефона — я отвечу!";
-                // Фолбэк — показать карту с центром Москвы
+            () => {
+                statusDiv.innerHTML = "📍 Не удалось определить. Нажмите на кнопку телефона!";
                 ymaps.ready(() => initMap(55.751244, 37.618423));
             }
         );
     }
 
-    // Запускаем получение геопозиции при загрузке
     window.onload = () => {
         getClientLocation();
     };
 
-    // Отправка формы в Telegram (бесплатный бот)
     document.getElementById("orderForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         const name = document.getElementById("name").value.trim();
@@ -262,22 +397,18 @@
         button.textContent = "Отправляю...";
         button.disabled = true;
 
-        const message = `🔧 НОВАЯ ЗАЯВКА НА РЕМОНТ\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🛠 Устройство: ${device}\n🏷 Бренд: ${brand || "не указан"}\n📍 Время: ${new Date().toLocaleString()}`;
+        const message = `🔧 НОВАЯ ЗАЯВКА\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🛠 Устройство: ${device}\n🏷 Бренд: ${brand || "не указан"}\n📍 Время: ${new Date().toLocaleString()}`;
 
         try {
             const url = `https://api.telegram.org/bot${YOUR_TELEGRAM_BOT_TOKEN}/sendMessage`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: YOUR_CHAT_ID,
-                    text: message,
-                    parse_mode: "HTML"
-                })
+                body: JSON.stringify({ chat_id: YOUR_CHAT_ID, text: message, parse_mode: "HTML" })
             });
             const data = await response.json();
             if (data.ok) {
-                alert("✅ Заявка отправлена! Я перезвоню через 5 минут.");
+                alert("✅ Заявка отправлена! Я перезвоню в ближайшее время.");
                 document.getElementById("orderForm").reset();
             } else {
                 alert("❌ Ошибка. Позвоните по телефону: +79001234567");

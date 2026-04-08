@@ -4,339 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     
-    <!-- SEO базовые -->
-    <title>Ремонт стиральных машин в Наро-Фоминске | Мастер Денис • Гарантия • Чек</title>
-    <meta name="description" content="✅ Ремонт стиральных и посудомоечных машин в Наро-Фоминске и районе. Самозанятый мастер Денис. Выезд за 1 час. Диагностика 0₽. Гарантия 2 года, официальный чек. Звоните!">
+    <title>Ремонт стиральных машин в Наро-Фоминске | Мастер Денис на выезде</title>
+    <meta name="description" content="✅ Ремонт стиральных и посудомоечных машин в Наро-Фоминске и районе. Выездной мастер Денис. Диагностика 0₽. Гарантия 2 года, чек. Звоните!">
     <meta name="keywords" content="ремонт стиральных машин Наро-Фоминск, ремонт посудомоек Наро-Фоминск, мастер по стиралкам Наро-Фоминск">
     <meta name="author" content="Денис">
     <meta name="robots" content="index, follow">
     <meta name="geo.region" content="RU-MOS">
     <meta name="geo.placename" content="Наро-Фоминск">
-    <meta name="geo.position" content="55.3875;36.7331">
     
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ремонт стиральных машин в Наро-Фоминске | Мастер Денис">
+    <meta property="og:title" content="Ремонт стиральных машин в Наро-Фоминске | Мастер на выезде">
     <meta property="og:description" content="Диагностика 0₽, выезд за час, гарантия 2 года. Работаю официально с чеком.">
+    <meta property="og:image" content="https://remont-stiralok.netlify.app/images/og-image.jpg">
     <meta property="og:url" content="https://remont-stiralok.netlify.app/">
     <meta property="og:locale" content="ru_RU">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
-    
-    <!-- Canonical -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="canonical" href="https://remont-stiralok.netlify.app/">
     
-    <!-- Яндекс.Карты (асинхронная загрузка) -->
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_api_ключ&lang=ru_RU&load=package.standard" type="text/javascript" async defer></script>
+    <!-- OpenStreetMap (Leaflet) — БЕЗ API КЛЮЧЕЙ, работает сразу -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: #f0f2f5;
-            padding: 16px;
-            color: #1e293b;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .card {
-            background: white;
-            border-radius: 32px;
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            transition: transform 0.2s;
-        }
-        .badge {
-            background: #dcfce7;
-            color: #15803d;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 16px;
-        }
-        h1 {
-            font-size: 26px;
-            margin-bottom: 12px;
-            line-height: 1.3;
-            color: #0f172a;
-        }
-        h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: #1e293b;
-        }
-        h3 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: #1e293b;
-        }
-        .master-card {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            padding: 16px;
-            border-radius: 24px;
-        }
-        .master-photo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #2563eb;
-            box-shadow: 0 4px 10px rgba(37,99,235,0.2);
-        }
-        .master-info {
-            flex: 1;
-        }
-        .master-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #0f172a;
-        }
-        .master-exp {
-            font-size: 14px;
-            color: #475569;
-            margin-top: 6px;
-        }
-        .status {
-            background: #eef2ff;
-            padding: 12px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .dot {
-            width: 10px;
-            height: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.4; transform: scale(0.8);}
-            100% { opacity: 1; transform: scale(1.2);}
-        }
-        #map {
-            width: 100%;
-            height: 280px;
-            border-radius: 24px;
-            margin: 16px 0;
-            border: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            background: #e2e8f0;
-        }
-        .features {
-            display: flex;
-            gap: 12px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        .feature {
-            flex: 1;
-            text-align: center;
-            padding: 12px 8px;
-            background: #f8fafc;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-        .feature img {
-            width: 44px;
-            height: 44px;
-            margin-bottom: 8px;
-            display: inline-block;
-        }
-        .feature p {
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-        }
-        .price-block {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-            color: white;
-            padding: 24px 20px;
-            border-radius: 28px;
-            text-align: center;
-            margin: 20px 0;
-            box-shadow: 0 8px 20px rgba(37,99,235,0.25);
-        }
-        .price {
-            font-size: 38px;
-            font-weight: 800;
-        }
-        .price small {
-            font-size: 15px;
-            font-weight: normal;
-        }
-        .about-text {
-            background: #fefce8;
-            padding: 16px;
-            border-radius: 20px;
-            margin: 16px 0;
-            border-left: 4px solid #eab308;
-            font-size: 15px;
-            line-height: 1.5;
-            color: #334155;
-        }
-        .review-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .review-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 12px;
-            transition: all 0.2s;
-        }
-        .review-item.left {
-            flex-direction: row;
-        }
-        .review-item.right {
-            flex-direction: row-reverse;
-        }
-        .review-item img {
-            width: 100px;
-            height: 100px;
-            border-radius: 16px;
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border: 2px solid white;
-        }
-        .review-text-sm {
-            flex: 1;
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.4;
-        }
-        .review-text-sm strong {
-            color: #0f172a;
-            display: block;
-            margin-bottom: 6px;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 60px;
-            border: 1px solid #cbd5e1;
-            margin-top: 12px;
-            font-size: 16px;
-            font-family: inherit;
-            transition: 0.2s;
-            background: white;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-        }
-        button {
-            background: #2563eb;
-            color: white;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(37,99,235,0.3);
-        }
-        button:hover {
-            background: #1d4ed8;
-            transform: scale(0.98);
-        }
-        .tel-block {
-            text-align: center;
-            margin-top: 16px;
-            padding: 14px;
-            background: #f1f5f9;
-            border-radius: 60px;
-        }
-        .tel-block a {
-            font-size: 22px;
-            font-weight: bold;
-            text-decoration: none;
-            color: #2563eb;
-            letter-spacing: 1px;
-        }
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 16px;
-            padding: 16px;
-        }
-        @media (max-width: 480px) {
-            body { padding: 12px; }
-            .card { padding: 18px; }
-            h1 { font-size: 22px; }
-            .tel-block a { font-size: 18px; }
-            .review-item img { width: 75px; height: 75px; }
-            .review-item { gap: 12px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; padding: 16px; color: #1e293b; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .card { background: white; border-radius: 32px; padding: 24px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .badge { background: #dcfce7; color: #15803d; padding: 6px 14px; border-radius: 40px; font-size: 13px; font-weight: 600; display: inline-block; margin-bottom: 16px; }
+        h1 { font-size: 26px; margin-bottom: 12px; line-height: 1.3; color: #0f172a; }
+        h2 { font-size: 20px; margin-bottom: 16px; color: #1e293b; }
+        h3 { font-size: 18px; margin-bottom: 16px; color: #1e293b; }
+        .master-card { display: flex; gap: 16px; align-items: center; margin-bottom: 20px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 16px; border-radius: 24px; }
+        .master-photo { width: 100px; height: 100px; border-radius: 16px; object-fit: cover; border: 3px solid #2563eb; box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
+        @media (min-width: 480px) { .master-photo { width: 110px; height: 110px; } }
+        .master-info { flex: 1; }
+        .master-name { font-size: 20px; font-weight: bold; color: #0f172a; }
+        .master-exp { font-size: 14px; color: #475569; margin-top: 6px; }
+        .status { background: #eef2ff; padding: 12px 16px; border-radius: 20px; font-size: 14px; display: flex; align-items: center; gap: 10px; margin: 16px 0; }
+        .dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.4; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+        #map { width: 100%; height: 280px; border-radius: 24px; margin: 16px 0; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1); background: #e2e8f0; z-index: 1; }
+        .features { display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap; }
+        .feature { flex: 1; text-align: center; padding: 12px 8px; background: #f8fafc; border-radius: 20px; }
+        .feature img { width: 48px; height: 48px; margin-bottom: 8px; display: inline-block; object-fit: contain; }
+        .feature p { font-size: 13px; font-weight: 600; color: #334155; }
+        .price-block { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 24px 20px; border-radius: 28px; text-align: center; margin: 20px 0; box-shadow: 0 8px 20px rgba(37,99,235,0.25); }
+        .price { font-size: 38px; font-weight: 800; }
+        .price small { font-size: 15px; font-weight: normal; }
+        .about-text { background: #fefce8; padding: 16px; border-radius: 20px; margin: 16px 0; border-left: 4px solid #eab308; font-size: 15px; line-height: 1.5; color: #334155; }
+        .review-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 8px; }
+        .review-item { display: flex; align-items: center; gap: 16px; background: #f8fafc; border-radius: 20px; padding: 12px; }
+        .review-item.left { flex-direction: row; }
+        .review-item.right { flex-direction: row-reverse; }
+        .review-item img { width: 90px; height: 90px; border-radius: 16px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 2px solid white; }
+        .review-text-sm { flex: 1; font-size: 13px; color: #475569; line-height: 1.4; }
+        .review-text-sm strong { color: #0f172a; display: block; margin-bottom: 6px; }
+        input, select, button { width: 100%; padding: 14px 18px; border-radius: 60px; border: 1px solid #cbd5e1; margin-top: 12px; font-size: 16px; font-family: inherit; background: white; }
+        input:focus, select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        button { background: #2563eb; color: white; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 2px 6px rgba(37,99,235,0.3); transition: 0.2s; }
+        button:hover { background: #1d4ed8; transform: scale(0.98); }
+        .tel-block { text-align: center; margin-top: 16px; padding: 14px; background: #f1f5f9; border-radius: 60px; }
+        .tel-block a { font-size: 22px; font-weight: bold; text-decoration: none; color: #2563eb; letter-spacing: 1px; }
+        .footer { text-align: center; font-size: 12px; color: #64748b; margin-top: 16px; padding: 16px; }
+        @media (max-width: 480px) { body { padding: 12px; } .card { padding: 18px; } h1 { font-size: 22px; } .tel-block a { font-size: 18px; } .review-item img { width: 70px; height: 70px; } .master-photo { width: 75px; height: 75px; } }
     </style>
 </head>
 <body>
 <div class="container">
     
-    <!-- Карточка мастера -->
     <div class="card">
-        <span class="badge">🔧 Самозанятый мастер • Работаю официально</span>
+        <span class="badge">🔧 Самозанятый мастер • Работаю на выезде</span>
         <h1>Ремонт стиральных и посудомоечных машин в Наро-Фоминске и МО</h1>
         
         <div class="master-card">
-            <img src="images/master.jpg" alt="Мастер Денис" class="master-photo" width="80" height="80" onerror="this.src='https://placehold.co/80x80?text=Денис'">
+            <img src="images/master.jpg" alt="Мастер Денис за работой" class="master-photo" onerror="this.src='https://placehold.co/100x100?text=Денис'">
             <div class="master-info">
                 <div class="master-name">Денис</div>
                 <div class="master-exp">✅ 5 лет опыта • 500+ отремонтированных машин</div>
             </div>
         </div>
 
-        <!-- Карта -->
+        <!-- Карта OpenStreetMap (БЕЗ API КЛЮЧА) -->
         <div id="map"></div>
         <div class="status" id="locationStatus">
             <span class="dot"></span> Определяю ваше местоположение...
         </div>
 
-        <!-- Преимущества с чёткими PNG (переделал на эмодзи-заглушки, но вы замените на свои иконки) -->
         <div class="features">
             <div class="feature">
-                <img src="images/garanty-icon.png" alt="Гарантия" width="44" height="44" onerror="this.src='https://placehold.co/44x44?text=🔧'">
+                <img src="images/garanty-icon.png" alt="Гарантия" onerror="this.src='https://placehold.co/48x48?text=🔧'">
                 <p>Гарантия 2 года</p>
             </div>
             <div class="feature">
-                <img src="images/receipt-icon.png" alt="Чек" width="44" height="44" onerror="this.src='https://placehold.co/44x44?text=🧾'">
+                <img src="images/receipt-icon.png" alt="Чек" onerror="this.src='https://placehold.co/48x48?text=🧾'">
                 <p>Официальный чек</p>
             </div>
             <div class="feature">
-                <img src="images/speed-icon.png" alt="Скорость" width="44" height="44" onerror="this.src='https://placehold.co/44x44?text=⚡'">
+                <img src="images/speed-icon.png" alt="Скорость" onerror="this.src='https://placehold.co/48x48?text=⚡'">
                 <p>Выезд за 1 час</p>
             </div>
         </div>
     </div>
 
-    <!-- Блок с ценой -->
     <div class="price-block">
         <div class="price">Диагностика 0 ₽ <small>при ремонте</small></div>
         <div style="font-size: 15px; margin-top: 8px; opacity: 0.95;">Выезд по Наро-Фоминску и району — бесплатно</div>
     </div>
 
-    <!-- Форма заявки -->
     <div class="card">
         <h2>📞 Оставить заявку</h2>
         <p style="font-size: 14px; margin-bottom: 8px; color: #475569;">Отвечаю за 5 минут в рабочее время</p>
@@ -356,7 +132,6 @@
         </div>
     </div>
 
-    <!-- Блок ОБО МНЕ + отзывы с фото слева/справа -->
     <div class="card">
         <h3>📌 Обо мне</h3>
         <div class="about-text">
@@ -368,21 +143,21 @@
         <h3 style="margin-top: 20px;">⭐ Отзывы моих клиентов</h3>
         <div class="review-grid">
             <div class="review-item left">
-                <img src="images/review1.jpg" alt="Отзыв 1" onerror="this.src='https://placehold.co/100x100?text=Отзыв'">
+                <img src="images/review1.jpg" alt="Отзывы клиентов 1" onerror="this.src='https://placehold.co/90x90?text=Отзыв'">
                 <div class="review-text-sm">
                     <strong>Ольга, Наро-Фоминск</strong>
                     «Мастер починил стиральную машину за час, очень аккуратно. Дал чек, всё объяснил. Буду рекомендовать!»
                 </div>
             </div>
             <div class="review-item right">
-                <img src="images/review2.jpg" alt="Отзыв 2" onerror="this.src='https://placehold.co/100x100?text=Отзыв'">
+                <img src="images/review2.jpg" alt="Отзывы клиентов 2" onerror="this.src='https://placehold.co/90x90?text=Отзыв'">
                 <div class="review-text-sm">
                     <strong>Олеся, Апрелевка</strong>
                     «Приехал быстро, посудомойка заработала как новая. Вежливый, профессиональный. Спасибо, Денис!»
                 </div>
             </div>
             <div class="review-item left">
-                <img src="images/review3.jpg" alt="Отзыв 3" onerror="this.src='https://placehold.co/100x100?text=Отзыв'">
+                <img src="images/review3.jpg" alt="Отзывы клиентов 3" onerror="this.src='https://placehold.co/90x90?text=Отзыв'">
                 <div class="review-text-sm">
                     <strong>Екатерина, Селятино</strong>
                     «Отличный мастер! Диагностику сделал бесплатно, ремонт качественно. Чек электронный прислал. Всё супер!»
@@ -393,93 +168,103 @@
 
     <div class="footer">
         <p>⚡ Работаю официально как самозанятый • Предоставляю чек и гарантийный талон</p>
-        <p>© 2025 Мастер Денис | Наро-Фоминск и Московская область</p>
+        <p>© 2026 Мастер Денис | Наро-Фоминск и Московская область</p>
     </div>
 </div>
 
 <script>
     // ========== НАСТРОЙКИ (ВСТАВЬТЕ СВОИ ДАННЫЕ) ==========
-    const YOUR_TELEGRAM_BOT_TOKEN = "ТУТКЛЮЧ";          // Например: "1234567890:ABCdefGHIjklmNOPqrstUVWXYZ"
-    const YOUR_CHAT_ID = "@ТГМОЙ";                     // Например: "@DenisMaster" ИЛИ цифровой ID: "123456789"
+    const YOUR_TELEGRAM_BOT_TOKEN = "8640771565:AAHwGCldMq_AgE9mCc-2nqJoBCPUmCd8p1k";
+    const YOUR_CHAT_ID = "@Tatooineman";
     const YOUR_PHONE = "+79017721914";
     // =====================================================
 
-    const NARO_FOMINSK_LAT = 55.3875;
-    const NARO_FOMINSK_LNG = 36.7331;
+    // Координаты Наро-Фоминска (ваша метка)
+    const MASTER_LAT = 55.3875;
+    const MASTER_LNG = 36.7331;
 
-    let userMap = null;
-    let userPlacemark = null;
-    let masterPlacemark = null;
-    let mapInitialized = false;
+    let map = null;
+    let masterMarker = null;
+    let userMarker = null;
 
-    // Функция инициализации карты (вызывается только после загрузки API)
-    function initMap(centerLat, centerLng, masterLat, masterLng) {
-        if (!window.ymaps || mapInitialized) return;
+    // Инициализация карты OpenStreetMap
+    function initMap(lat, lng) {
+        map = L.map('map').setView([lat, lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        }).addTo(map);
         
-        mapInitialized = true;
-        userMap = new ymaps.Map("map", {
-            center: [centerLat, centerLng],
-            zoom: 13,
-            controls: ["zoomControl", "geolocationControl"]
-        });
+        // Зелёная метка мастера
+        masterMarker = L.marker([MASTER_LAT, MASTER_LNG], {
+            icon: L.divIcon({
+                className: 'custom-div-icon',
+                html: '🔧',
+                iconSize: [30, 30],
+                popupAnchor: [0, -15]
+            })
+        }).addTo(map);
+        masterMarker.bindPopup('📍 Мастер на выезде • Работаю в Наро-Фоминске и районе');
         
-        masterPlacemark = new ymaps.Placemark([masterLat, masterLng], {
-            balloonContent: "📍 Я здесь (мастер) — работаю в Наро-Фоминске и области"
-        }, {
-            preset: "islands#greenHomeIcon",
-            iconColor: "#16a34a"
-        });
-        userMap.geoObjects.add(masterPlacemark);
-        
-        userPlacemark = new ymaps.Placemark([centerLat, centerLng], {}, {
-            preset: "islands#blueCircleDotIcon",
-            iconColor: "#3b82f6"
+        // Синяя метка клиента (пока скрыта)
+        userMarker = L.marker([lat, lng], {
+            icon: L.divIcon({
+                className: 'custom-div-icon',
+                html: '📍',
+                iconSize: [24, 24]
+            })
         });
     }
 
-    function getClientLocation() {
+    // Получаем геолокацию клиента
+    function getUserLocation() {
         const statusDiv = document.getElementById("locationStatus");
         
-        // Ждём загрузку Яндекс.Карт
-        const waitForYMaps = setInterval(() => {
-            if (window.ymaps && window.ymaps.Map) {
-                clearInterval(waitForYMaps);
+        if (!navigator.geolocation) {
+            statusDiv.innerHTML = "⚠️ Включите геолокацию или напишите мне в WhatsApp";
+            initMap(MASTER_LAT, MASTER_LNG);
+            return;
+        }
+        
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+                statusDiv.innerHTML = `<span class="dot"></span> ✅ Я вижу вас! Мастер рядом — готов выехать.`;
                 
-                if (!navigator.geolocation) {
-                    statusDiv.innerHTML = "⚠️ Включите геолокацию или напишите мне в WhatsApp";
-                    initMap(NARO_FOMINSK_LAT, NARO_FOMINSK_LNG, NARO_FOMINSK_LAT, NARO_FOMINSK_LNG);
-                    return;
+                if (!map) {
+                    initMap(userLat, userLng);
+                } else {
+                    map.setView([userLat, userLng], 13);
                 }
                 
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const clientLat = position.coords.latitude;
-                        const clientLng = position.coords.longitude;
-                        statusDiv.innerHTML = `<span class="dot"></span> ✅ Я вижу вас! Мастер в Наро-Фоминске — готов выехать.`;
-                        
-                        initMap(clientLat, clientLng, NARO_FOMINSK_LAT, NARO_FOMINSK_LNG);
-                        setTimeout(() => {
-                            if (userMap && userPlacemark) {
-                                userPlacemark.geometry.setCoordinates([clientLat, clientLng]);
-                                userMap.geoObjects.add(userPlacemark);
-                                userMap.setCenter([clientLat, clientLng], 13);
-                            }
-                        }, 300);
-                    },
-                    () => {
-                        statusDiv.innerHTML = "📍 Не удалось определить. Мастер в Наро-Фоминске — звоните!";
-                        initMap(NARO_FOMINSK_LAT, NARO_FOMINSK_LNG, NARO_FOMINSK_LAT, NARO_FOMINSK_LNG);
-                    }
-                );
+                // Добавляем или перемещаем метку клиента
+                if (userMarker) {
+                    userMarker.setLatLng([userLat, userLng]);
+                } else {
+                    userMarker = L.marker([userLat, userLng], {
+                        icon: L.divIcon({
+                            className: 'custom-div-icon',
+                            html: '📍',
+                            iconSize: [24, 24]
+                        })
+                    }).addTo(map);
+                }
+                userMarker.bindPopup('📍 Вы здесь').openPopup();
+            },
+            () => {
+                statusDiv.innerHTML = "📍 Не удалось определить. Мастер в Наро-Фоминске — звоните!";
+                initMap(MASTER_LAT, MASTER_LNG);
             }
-        }, 100);
+        );
     }
 
+    // Запускаем при загрузке
     window.onload = () => {
-        getClientLocation();
+        getUserLocation();
     };
 
-    // Отправка формы в Telegram (исправлено)
+    // Отправка формы в Telegram
     document.getElementById("orderForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         const name = document.getElementById("name").value.trim();
@@ -492,9 +277,8 @@
             return;
         }
 
-        // Проверка что ключ бота и chat_id не заглушки
-        if (YOUR_TELEGRAM_BOT_TOKEN === "ТУТКЛЮЧ" || YOUR_CHAT_ID === "@ТГМОЙ") {
-            alert("⚠️ Telegram бот не настроен. Позвоните по телефону: " + YOUR_PHONE);
+        if (YOUR_TELEGRAM_BOT_TOKEN === "8640771565:AAHwGCldMq_AgE9mCc-2nqJoBCPUmCd8p1k" || YOUR_CHAT_ID === "@Tatooineman") {
+            alert("⚠️ Telegram бот не настроен. Позвоните по телефону: " + 79017721914);
             return;
         }
 
@@ -505,28 +289,21 @@
         const message = `🔧 НОВАЯ ЗАЯВКА\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🛠 Устройство: ${device}\n🏷 Бренд: ${brand || "не указан"}\n📍 Время: ${new Date().toLocaleString()}\n📍 Регион: Наро-Фоминск и МО`;
 
         try {
-            // Поддержка как username (с @) так и числового chat_id
-            let chatIdParam = YOUR_CHAT_ID;
-            if (chatIdParam.startsWith("@")) {
-                chatIdParam = chatIdParam; // бот поддерживает username
-            }
-            const url = `https://api.telegram.org/bot${YOUR_TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const url = `https://api.telegram.org/bot${8640771565:AAHwGCldMq_AgE9mCc-2nqJoBCPUmCd8p1k}/sendMessage`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: chatIdParam, text: message, parse_mode: "HTML" })
+                body: JSON.stringify({ chat_id: @Tatooineman, text: message, parse_mode: "HTML" })
             });
             const data = await response.json();
             if (data.ok) {
                 alert("✅ Заявка отправлена! Я перезвоню в ближайшее время.");
                 document.getElementById("orderForm").reset();
             } else {
-                console.error("Telegram error:", data);
-                alert("❌ Ошибка отправки. Позвоните по телефону: " + YOUR_PHONE);
+                alert("❌ Ошибка отправки. Позвоните по телефону: " + 79017721914);
             }
         } catch (err) {
-            console.error("Fetch error:", err);
-            alert("❌ Не отправилось. Позвоните мне: " + YOUR_PHONE);
+            alert("❌ Не отправилось. Позвоните мне: " + 79017721914);
         } finally {
             button.textContent = "🚀 Вызвать мастера сейчас";
             button.disabled = false;

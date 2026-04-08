@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: remont-stiralok.netlify.app/sitemap.xml
